@@ -8,6 +8,9 @@
   <%= label :movie, :release_date, 'Released On', class: 'col-form-label' %>
   <%= date_select :movie, :release_date, {}, class: 'form-control col-2 d-inline' %>
   <br/>
+  <%= label :movie, :director, 'Director', class: 'col-form-label' %>
+  <%= text_field :movie, :director, class: 'form-control' %>
+  <br/>
   <%= submit_tag 'Save Changes', class: 'btn btn-primary' %>
   <%= link_to 'Cancel', movies_path, class: 'btn btn-secondary' %>
 <% end %>

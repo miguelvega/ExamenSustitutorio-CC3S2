@@ -1,6 +1,19 @@
 {
   "Cucumber Features": {
     "coverage": {
+      "/home/miguelubuntu/Escritorio/EX_SUSTITORIO_CC3S2/ExamenSustitutorio-CC3S2/Actividad-ES/app/models/movie.rb": {
+        "lines": [
+          1,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null
+        ]
+      },
       "/home/miguelubuntu/Escritorio/EX_SUSTITORIO_CC3S2/ExamenSustitutorio-CC3S2/Actividad-ES/app/helpers/application_helper.rb": {
         "lines": [
           0,
@@ -80,23 +93,8 @@
         ],
         "branches": {
         }
-      },
-      "/home/miguelubuntu/Escritorio/EX_SUSTITORIO_CC3S2/ExamenSustitutorio-CC3S2/Actividad-ES/app/models/movie.rb": {
-        "lines": [
-          0,
-          null,
-          null,
-          null,
-          null,
-          0,
-          null,
-          0,
-          0
-        ],
-        "branches": {
-        }
       }
     },
-    "timestamp": 1703679819
+    "timestamp": 1703681405
   }
 }
