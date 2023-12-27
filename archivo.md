@@ -1,5 +1,6 @@
 # RESPUESTAS
 
+## Parte 1: El ciclo de prueba de aceptación- prueba unitaria
 En primera instancia realizamos la migracion y cargamos los datos en la tabla movies de nuestra base de datos con el comando bundle exec rake db:seed, luego ejecutamos rails server y tenemos lo siguiente:
 
 ![Captura de pantalla de 2023-12-27 07-24-52](https://github.com/miguelvega/ExamenSustitutorio-CC3S2/assets/124398378/63c62021-b838-4e94-b6bd-fc38e05ff8f6)
@@ -424,6 +425,38 @@ World(NavigationHelpers)
 ![Captura de pantalla de 2023-12-27 16-22-57](https://github.com/miguelvega/ExamenSustitutorio-CC3S2/assets/124398378/9a240d55-dc3d-420d-89da-2e849afc0643)
 
 Segun vemos en la imagen anterior, faltaria  redirigir a la página de inicio cuando no se proporciona información sobre el director .
+
+###  Cobertura del código (1 punto)
+
+Abrimos coverage/index.html después de una ejecución de prueba y haz clic en el nombre de cualquier archivo en tu aplicación para ver qué líneas cubrieron tus pruebas
+
+![Captura de pantalla de 2023-12-27 17-00-09](https://github.com/miguelvega/ExamenSustitutorio-CC3S2/assets/124398378/99142b9b-7ad4-44ea-a2d1-e23119f02db0)
+
+
+
+Agregamos escenarios y pasos para cubrir los huecos
+
+```
+Scenario: View the list of movies
+  Given I am on the home page
+  When I follow "All Movies"
+  Then I should see the list of movies
+
+```
+
+Y su correspondiente definicion de paso :
+
+```
+
+Then("I should see the list of movies on the home page") do
+  expect(page).to have_content("Star Wars")
+  expect(page).to have_content("Blade Runner")
+end
+
+```
+
+
+![Captura de pantalla de 2023-12-27 17-29-36](https://github.com/miguelvega/ExamenSustitutorio-CC3S2/assets/124398378/73096bac-46cf-40f9-9b64-1ab46ea570aa)
 
 ## Parte 2: Ruby on Rails
 
