@@ -502,6 +502,73 @@ Cuando omitimos el enrutador y llamamos directamente a una acción del controlad
 Crea varias funciones que te permitirán interactuar con las cookies de la página, incluida la lectura de un valor de cookie por nombre, la creación de una nueva cookie usando un nombre y su configuración para una cantidad determinada de días, y la eliminación de una cookie.
 Configura tu página web y, en el código JavaScript, genera el valor de documento.cookie que debería estar en blanco. Intenta eliminar un cookie por su nombre.
 
+Realizamos un ejemplo general de la interactuar con las cookies de la página.
+
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Interaction</title>
+</head>
+<body>
+    <script>
+        // Función para obtener el valor de una cookie por nombre
+        function getCookie(name) {
+            const cookies = document.cookie.split('; ');
+            for (const cookie of cookies) {
+                const [cookieName, cookieValue] = cookie.split('=');
+                if (cookieName === name) {
+                    return cookieValue;
+                }
+            }
+            return null;
+        }
+
+        // Función para crear una nueva cookie
+        function setCookie(name, value, days) {
+            const expirationDate = new Date();
+            expirationDate.setDate(expirationDate.getDate() + days);
+            const expires = `expires=${expirationDate.toUTCString()}`;
+            document.cookie = `${name}=${value}; ${expires}; path=/`;
+        }
+
+        // Función para eliminar una cookie por nombre
+        function deleteCookie(name) {
+            document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+        }
+
+        // Configuración inicial: Generar el valor de document.cookie que debería estar en blanco
+        console.log("Cookies antes de la configuración inicial:", document.cookie);
+
+        // Configuración inicial: Intentar eliminar una cookie por nombre
+        deleteCookie("exampleCookie");
+
+        // Configuración inicial: Mostrar el resultado después de intentar eliminar la cookie
+        console.log("Cookies después de intentar eliminar la cookie:", document.cookie);
+
+        // Configuración inicial: Crear una nueva cookie con un valor y una duración de 1 día
+        setCookie("exampleCookie", "exampleValue", 1);
+
+        // Mostrar el resultado después de la configuración inicial
+        console.log("Cookies después de la configuración inicial:", document.cookie);
+    </script>
+</body>
+</html>
+
+
+```
+
+- getCookie(name): Esta función recibe el nombre de una cookie como argumento y devuelve su valor. Primero, divide la cadena document.cookie en un array de cookies utilizando split('; '). Luego, recorre este array y compara el nombre de cada cookie con el nombre proporcionado. Si encuentra la cookie, devuelve su valor; de lo contrario, devuelve null.
+
+- setCookie(name, value, days): Esta función crea una nueva cookie con un nombre, un valor y una duración en días. Calcula la fecha de expiración sumando la cantidad de días a la fecha actual. Luego, crea una cadena de configuración de cookie que incluye el nombre, el valor, la fecha de expiración y la ruta, y la agrega a document.cookie.
+
+- deleteCookie(name): Esta función elimina una cookie dada su nombre. Para hacerlo, establece la fecha de expiración en el pasado (antes de la fecha actual). Al hacerlo, el navegador eliminará automáticamente la cookie.
+
+- Configuración Inicial: Antes de realizar cualquier acción, se imprime en la consola el valor actual de document.cookie. Luego, se intenta eliminar una cookie llamada "exampleCookie" (aunque aún no existe). Finalmente, se crea una nueva cookie llamada "exampleCookie" con un valor "exampleValue" y una duración de 1 día. Después de cada acción, se muestra en la consola el valor actualizado de document.cookie.
+
+Con lo cual  esta funciones gestionan las cookies en JavaScript. getCookie lee el valor de una cookie por nombre, setCookie crea una nueva cookie, y deleteCookie elimina una cookie por nombre. La configuración inicial demuestra cómo utilizar estas funciones y muestra los cambios en document.cookie.
 
 ### Pregunta 3 (2 punto)
 Extienda la función de validación en ActiveModel que se ha utilizado en actividades de clase para
