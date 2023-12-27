@@ -454,7 +454,7 @@ Then("I should see the list of movies on the home page") do
 end
 
 ```
-
+Con esto aumentamos el porcentaje
 
 ![Captura de pantalla de 2023-12-27 17-29-36](https://github.com/miguelvega/ExamenSustitutorio-CC3S2/assets/124398378/73096bac-46cf-40f9-9b64-1ab46ea570aa)
 
@@ -558,9 +558,22 @@ Al volver a la lista de peliculas podemos apreciar que no se edito la pelicula
 ![Captura de pantalla de 2023-12-27 17-54-06](https://github.com/miguelvega/ExamenSustitutorio-CC3S2/assets/124398378/492643d8-d12f-4754-81f2-06e939ffb559)
 
 
-Ahora realicemos las validaciones del lado del cliente haciendo uso de codigo javascript. Usaremos de ejemplo la interaccion del usuario  con la vista correspondiente a new.
+Ahora realicemos las validaciones del lado del cliente haciendo uso de codigo javascript. Usaremos de ejemplo la interaccion del usuario  con la vista correspondiente a new. Pero primero veamos la parte del DOM que vamos a necesitar para tratar la informacion con el codigo de javascript. Donde la parte <head> es comun debido a views/layouts/application.html.erb por ese motivo no lo coloco.
 
-Para ello, agregamos el siguiente codigo javascript al final de nuestro archivo new.html.erb
+```
+Document
+└── <html>
+    └── <head>
+            .................................................
+    └── <body>
+        └── <h2>Create New Movie</h2>
+        └── <form class="form">
+            └── <label for="movie_title" class="col-form-label">
+            └── <input id="movie_title" class="form-control" name="movie[title]" type="text">
+            
+````
+
+Aregamos el siguiente codigo javascript al final de nuestro archivo new.html.erb
 
 
 ```javascript
@@ -594,3 +607,111 @@ Con ello le mostramos al usuario nuestras restricciones al querer agregar una nu
 ![Captura de pantalla de 2023-12-27 18-01-51](https://github.com/miguelvega/ExamenSustitutorio-CC3S2/assets/124398378/19d84d2b-e59b-4f24-a9a0-7a5fceb99bc2)
 
 
+
+
+### Parte 4: Pruebas y Rspec (3 puntos)
+
+El sistema de puntuación utilizado en el tenis sobre hierba se originó en la Edad Media. A medida que los
+jugadores ganan puntos sucesivos, sus puntuaciones se muestran como 15, 30 y 40. El siguiente punto
+es una victoria a menos que tu oponente también tenga 40. Si ambos están empatados a 40, entonces
+se aplican reglas diferentes: el primer jugador con una clara ventaja de dos puntos es el ganador.
+Algunos dicen que el sistema 0, 15, 30, 40 es una corrupción del hecho de que la puntuación solía
+hacerse utilizando los cuartos de un reloj.
+
+Creamos la carpeta spec donde se va almacenar nuestra prueba llamada tennis_scorer_spec.rb 
+
+``` ruby
+require_relative '../lib/tennis_scorer.rb'
+
+RSpec.describe "TennisScorer" do
+    describe "puntuación básica" do
+      it "empieza con un marcador de 0-0" do
+        scorer = TennisScorer.new
+        expect(scorer.score).to eq("0-0")
+      end
+  
+      it "hace que el marcador sea 15-0 si el sacador gana un punto" do
+        scorer = TennisScorer.new
+        scorer.sacador_gana_punto
+        expect(scorer.score).to eq("15-0")
+      end
+  
+      it "hace que el marcador sea 0-15 si el receptor gana un punto" do
+        scorer = TennisScorer.new
+        scorer.receptor_gana_punto
+        expect(scorer.score).to eq("0-15")
+      end
+  
+      it "hace que el marcador sea 15-15 después de que ambos ganen un punto" do
+        scorer = TennisScorer.new
+        scorer.sacador_gana_punto
+        scorer.receptor_gana_punto
+        expect(scorer.score).to eq("15-15")
+      end
+
+      
+    end
+
+    
+  end
+  
+
+```
+
+Luego, creamos el archivo tennis_scorer.rb en la carpeta lib con el siguiente codigo:
+
+```ruby
+
+class TennisScorer
+
+end
+
+```
+
+Donde obviamente al ejecutar el comando rspec spec/tennis_scorer_spec.rb tendremos el siguiente resultado :
+
+
+![Captura de pantalla de 2023-12-27 18-25-29](https://github.com/miguelvega/ExamenSustitutorio-CC3S2/assets/124398378/9fb9ba0f-41f8-4413-98a7-b49a3f070e36)
+
+
+Queremos implementar el proceso RGR, por ello primero hemos realizado el codigo de prueba con lo cual como el codigo almacenado en tennis_scorer.rb no esta implemnetado todas las pruebas fallaran , por ello vemos  FFFF de color rojo.
+
+
+Luego, implementamos los metodos y atributos en el archivo tennis_scorer.rb para pasar todas las pruebas.
+
+```ruby
+
+
+class TennisScorer
+
+    def initialize
+      @score = { sacador: 0, receptor: 0 }
+    end
+  
+    def sacador_gana_punto
+      @score[:sacador] += 1
+    end
+  
+    def receptor_gana_punto
+      @score[:receptor] += 1
+    end
+  
+    def score
+      "#{puntuacion(@score[:sacador])}-#{puntuacion(@score[:receptor])}"
+    end
+  
+    private
+  
+    def puntuacion(puntos)
+      case puntos
+      when 0 then "0"
+      when 1 then "15"
+      when 2 then "30"
+      when 3 then "40"
+      end
+    end
+  end
+  
+```
+
+![Captura de pantalla de 2023-12-27 18-35-04](https://github.com/miguelvega/ExamenSustitutorio-CC3S2/assets/124398378/22098fb2-8799-4454-8475-6209f67533e0)
