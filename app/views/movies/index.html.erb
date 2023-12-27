@@ -26,7 +26,7 @@
           <%= movie.release_date %>
         </td>
         <td>
-          <%= movie.director %>
+         <%= movie.director.present? ? link_to(movie.director, show_by_director_movie_path(movie)) : "" %>
         </td>
         <td>
           <%= link_to "More about #{movie.title}", movie_path(movie) %>

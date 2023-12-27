@@ -12,15 +12,17 @@ module NavigationHelpers
   #
   def path_to(page_name)
     case page_name
-
-    when /^the (RottenPotatoes )?home\s?page$/ then '/movies'
-
-    # Add more mappings here.
-    # Here is an example that pulls values out of the Regexp:
-    #
-    #   when /^(.*)'s profile page$/i
-    #     user_profile_path(User.find_by_login($1))
-
+    when /^the home\s?page$/
+      '/'
+    when /^the details page for "([^"]+)"$/
+      movie = Movie.find_by(title: $1)
+      movie_path(movie)
+    when /^the edit page for "([^"]+)"$/
+      movie = Movie.find_by(title: $1)
+      edit_movie_path(movie)
+    when /^the Similar Movies page for "([^"]+)"$/
+      movie = Movie.find_by(title: $1)
+      show_by_director_movie_path(movie)
     else
       begin
         page_name =~ /^the (.*) page$/
@@ -28,10 +30,11 @@ module NavigationHelpers
         self.send(path_components.push('path').join('_').to_sym)
       rescue NoMethodError, ArgumentError
         raise "Can't find mapping from \"#{page_name}\" to a path.\n" +
-          "Now, go and add a mapping in #{__FILE__}"
+              "Now, go and add a mapping in #{__FILE__}"
       end
     end
   end
 end
 
 World(NavigationHelpers)
+

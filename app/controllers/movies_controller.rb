@@ -9,6 +9,14 @@ class MoviesController < ApplicationController
   def index
     @movies = Movie.all
   end
+  
+  
+  def show_by_director
+    @movie = Movie.find(params[:id])
+    
+    @director = @movie.director
+    @movies = @movie.others_by_same_director
+  end
 
   def new
     # default: render 'new' template
@@ -25,10 +33,15 @@ class MoviesController < ApplicationController
   end
 
   def update
-    @movie = Movie.find params[:id]
-    @movie.update_attributes!(movie_params)
-    flash[:notice] = "#{@movie.title} was successfully updated."
-    redirect_to movie_path(@movie)
+    @movie = Movie.find(params[:id])
+    if movie_params[:title].present?
+      @movie.update_attributes!(movie_params)
+      flash[:notice] = "#{@movie.title} was successfully updated."
+      redirect_to movie_path(@movie)
+    else 
+      flash[:notice] = 'Title can not be blank'
+      render :edit
+    end
   end
 
   def destroy
@@ -42,6 +55,6 @@ class MoviesController < ApplicationController
 
   # Note - for Part 1, you may need to modify this method.
   def movie_params
-    params.require(:movie).permit(:title, :rating, :description, :release_date)
+    params.require(:movie).permit(:title, :rating, :description, :release_date, :director)
   end
 end

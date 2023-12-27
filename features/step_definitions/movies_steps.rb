@@ -23,3 +23,27 @@ Then /I should see all the movies/ do
     step %{I should see "#{movie.title}"}
   end
 end
+
+Then(/^the director of "([^"]*)" should be "([^"]*)"$/) do |movie_title, director_name|
+  movie = Movie.find_by(title: movie_title)
+  expect(movie.director).to eq(director_name)
+end
+
+
+Then("I should see the list of movies") do
+  # Implement the steps to verify that the list of movies is displayed
+  expect(page).to have_content("Star Wars")
+  expect(page).to have_content("Blade Runner")
+  # Add more expectations as needed
+end
+
+
+Then("I should see the list of movies on the home page") do
+  expect(page).to have_content("Star Wars")
+  expect(page).to have_content("Blade Runner")
+end
+
+
+
+
+

@@ -14,3 +14,24 @@
   <%= submit_tag 'Save Changes', class: 'btn btn-primary' %>
   <%= link_to 'Cancel', movies_path, class: 'btn btn-secondary' %>
 <% end %>
+
+
+
+<script>
+  document.querySelector('.form').addEventListener('submit', function (event) {
+    document.getElementById('movie_title').classList.remove('validation-error');
+    var title = document.querySelector('#movie_title').value;
+    if (title.trim() === '') {
+      alert('El título no puede estar vacío');
+      document.getElementById('movie_title').classList.add('validation-error');
+      event.preventDefault();
+      return;
+    }
+    });
+</script>
+
+<style>
+  .validation-error {
+    border: 1px solid red;
+  }
+</style>
