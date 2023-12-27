@@ -503,5 +503,94 @@ Crea varias funciones que te permitirán interactuar con las cookies de la pági
 Configura tu página web y, en el código JavaScript, genera el valor de documento.cookie que debería estar en blanco. Intenta eliminar un cookie por su nombre.
 
 
+### Pregunta 3 (2 punto)
+Extienda la función de validación en ActiveModel que se ha utilizado en actividades de clase para
+generar automáticamente código JavaScript que valide las entradas del formulario antes de que sea
+enviado. Por ejemplo, puesto que el modelo Movie de RottenPotatoes requiere que el título de cada
+película sea distinto de la cadena vacía, el código JavaScript debería evitar que el formulario “Add New
+Movie” se enviara si no se cumplen los criterios de validación, mostrar un mensaje de ayuda al usuario, y
+resaltar el(los) campo(s) del formulario que ocasionaron los problemas de validación. Gestiona, al
+menos, las validaciones integradas, como que los títulos sean distintos de cadena vacía, que las
+longitudes máxima y mínima de la cadena de caracteres sean correctas, que los valores numéricos estén
+dentro de los límites de los rangos, y para puntos adicionales, realice las validaciones basándose en
+expresiones regulares.
 
-    
+Agregamos validaciones del lado del servidor para la accion index de tal manera que cuando el usuario quiera colocar el titulo en blanco
+el controlador le mando un mensaje de alerta y ademas este no se guarde en la base de datos. Hacemos esto en la accion update del controlador 
+
+```ruby
+def update
+    @movie = Movie.find(params[:id])
+    if movie_params[:title].present?
+      @movie.update_attributes!(movie_params)
+      flash[:notice] = "#{@movie.title} was successfully updated."
+      redirect_to movie_path(@movie)
+    else 
+      flash[:notice] = 'Title can not be blank'
+      render :edit
+    end
+  end
+
+```
+
+y tambien en el el archivo movie.rb :
+
+```ruby
+  validates :title, :presence => true
+
+```
+
+Editamos la pelicula The Terminator
+
+![Captura de pantalla de 2023-12-27 17-53-32](https://github.com/miguelvega/ExamenSustitutorio-CC3S2/assets/124398378/ed9bddf8-d020-4bc9-9b76-e40e99fb6b35)
+
+Borramos el titulo de la pelicula
+
+![Captura de pantalla de 2023-12-27 17-53-45](https://github.com/miguelvega/ExamenSustitutorio-CC3S2/assets/124398378/6db93211-aabd-4a86-af3d-991eedd69e13)
+
+Y guardamos los cambios, sin embargo se puede apreciar que no se realizo el cambio debido a las validaciones establecidas.
+
+![Captura de pantalla de 2023-12-27 17-53-50](https://github.com/miguelvega/ExamenSustitutorio-CC3S2/assets/124398378/931cc794-218c-4708-94c8-fe495b97a035)
+
+Al volver a la lista de peliculas podemos apreciar que no se edito la pelicula 
+
+
+![Captura de pantalla de 2023-12-27 17-54-06](https://github.com/miguelvega/ExamenSustitutorio-CC3S2/assets/124398378/492643d8-d12f-4754-81f2-06e939ffb559)
+
+
+Ahora realicemos las validaciones del lado del cliente haciendo uso de codigo javascript. Usaremos de ejemplo la interaccion del usuario  con la vista correspondiente a new.
+
+Para ello, agregamos el siguiente codigo javascript al final de nuestro archivo new.html.erb
+
+
+```javascript
+<script>
+  document.querySelector('.form').addEventListener('submit', function (event) {
+    document.getElementById('movie_title').classList.remove('validation-error');
+    var title = document.querySelector('#movie_title').value;
+    if (title.trim() === '') {
+      alert('El título no puede estar vacío');
+      document.getElementById('movie_title').classList.add('validation-error');
+      event.preventDefault();
+      return;
+    }
+    });
+</script>
+
+<style>
+  .validation-error {
+    border: 1px solid red;
+  }
+</style>
+
+```
+
+Dentro del script de Javascript estamos agregando un event listener al formulario con la clase 'form' que escucha el evento 'submit'.Cuando se envía el formulario, se remueve cualquier estilo de validación anterior al eliminar la clase 'validation-error' del campo de entrada con el ID 'movie_title'.Luego, se obtiene el valor del campo de título y se verifica si está vacío después de quitar espacios en blanco. Si el campo está vacío, se muestra una alerta, se resalta el campo con la clase 'validation-error', se previene el envío del formulario y se sale de la función. Ademas, el bloque de estilo CSS define la apariencia de los campos de entrada con la clase 'validation-error'. En este caso, agrega un borde rojo alrededor del campo.
+
+Con ello le mostramos al usuario nuestras restricciones al querer agregar una nueva pelicula y le mostramod donde ha cometido el error.
+
+![Captura de pantalla de 2023-12-27 18-01-45](https://github.com/miguelvega/ExamenSustitutorio-CC3S2/assets/124398378/68437bab-82b1-4755-9aae-fe1bb3495836)
+
+![Captura de pantalla de 2023-12-27 18-01-51](https://github.com/miguelvega/ExamenSustitutorio-CC3S2/assets/124398378/19d84d2b-e59b-4f24-a9a0-7a5fceb99bc2)
+
+
