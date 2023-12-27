@@ -165,6 +165,36 @@ edit.html.erb
 ![Captura de pantalla de 2023-12-27 09-55-14](https://github.com/miguelvega/ExamenSustitutorio-CC3S2/assets/124398378/3918de28-ee1f-444f-adb3-9131f4913c1c)
 
 
+Comprobamos la funcionalidad de nuestra aplicacion, ejecutamos `rails console` y listamos todas las peliculas con Movie.all y podemos apreciar que todos los campos de nuestras peliculas esta vacios.
+
+```
+Movie Load (0.6ms)  SELECT "movies".* FROM "movies"
+ => #<ActiveRecord::Relation [#<Movie id: 1, title: "Aladdin", rating: "G", description: nil, release_date: "1992-11-25 00:00:00", created_at: "2023-12-27 12:22:59", updated_at: "2023-12-27 12:22:59", director: nil>, #<Movie id: 2, title: "The Terminator", rating: "R", description: nil, release_date: "1984-10-26 00:00:00", created_at: "2023-12-27 12:22:59", updated_at: "2023-12-27 12:22:59", director: nil>, #<Movie id: 3, title: "When Harry Met Sally", rating: "R", description: nil, release_date: "1989-07-21 00:00:00", created_at: "2023-12-27 12:22:59", updated_at: "2023-12-27 12:22:59", director: nil>, #<Movie id: 4, title: "The Help", rating: "PG-13", description: nil, release_date: "2011-08-10 00:00:00", created_at: "2023-12-27 12:22:59", updated_at: "2023-12-27 12:22:59", director: nil>, #<Movie id: 5, title: "Chocolat", rating: "PG-13", description: nil, release_date: "2001-01-05 00:00:00", created_at: "2023-12-27 12:22:59", updated_at: "2023-12-27 12:22:59", director: nil>, #<Movie id: 6, title: "Amelie", rating: "R", description: nil, release_date: "2001-04-25 00:00:00", created_at: "2023-12-27 12:22:59", updated_at: "2023-12-27 12:22:59", director: nil>, #<Movie id: 7, title: "2001: A Space Odyssey", rating: "G", description: nil, release_date: "1968-04-06 00:00:00", created_at: "2023-12-27 12:22:59", updated_at: "2023-12-27 12:22:59", director: nil>, #<Movie id: 8, title: "The Incredibles", rating: "PG", description: nil, release_date: "2004-11-05 00:00:00", created_at: "2023-12-27 12:22:59", updated_at: "2023-12-27 12:22:59", director: nil>, #<Movie id: 9, title: "Raiders of the Lost Ark", rating: "PG", description: nil, release_date: "1981-06-12 00:00:00", created_at: "2023-12-27 12:22:59", updated_at: "2023-12-27 12:22:59", director: nil>, #<Movie id: 10, title: "Chicken Run", rating: "G", description: nil, release_date: "2000-06-21 00:00:00", created_at: "2023-12-27 12:22:59", updated_at: "2023-12-27 12:22:59", director: nil>]> 
+
+```
+Mostramos especificamente los campos del registro de titulo The Terminator con el comando `movie = Movie.find_by(title: 'The Terminator')`
+
+![Captura de pantalla de 2023-12-27 11-38-23](https://github.com/miguelvega/ExamenSustitutorio-CC3S2/assets/124398378/2c2d7438-4884-4f49-8e0f-d638685ff57b)
+
+Y agregamos un director a la pelicula con  movie.update(director: 'James Cameron')
+
+![Captura de pantalla de 2023-12-27 11-38-34](https://github.com/miguelvega/ExamenSustitutorio-CC3S2/assets/124398378/b676c153-9120-4309-b16e-ae3487c48ed4)
+
+Vemos los cambios en el navegador
+
+![Captura de pantalla de 2023-12-27 11-39-18](https://github.com/miguelvega/ExamenSustitutorio-CC3S2/assets/124398378/9f339f88-1d02-43f7-9265-3cb05e3a1fbe)
+
+Tambien podemos editar el director de una pelicula directamente desde el navegador, colocando que el director de la pelicula Aladdin sera Viviana  :
+
+![Captura de pantalla de 2023-12-27 11-47-40](https://github.com/miguelvega/ExamenSustitutorio-CC3S2/assets/124398378/888855b3-aff1-42ed-9e3f-b274be33aaa0)
+
+
+![Captura de pantalla de 2023-12-27 11-43-45](https://github.com/miguelvega/ExamenSustitutorio-CC3S2/assets/124398378/22247069-366e-458d-82a0-5ef2183fb243)
+
+Y podemos apreciar el cambio en la vista index del director de la pelicula Aladdin
+
+![Captura de pantalla de 2023-12-27 11-43-51](https://github.com/miguelvega/ExamenSustitutorio-CC3S2/assets/124398378/43101921-58c3-4097-a0d6-d1d32b6d2bab)
+
 
 ## Parte 2: Ruby on Rails
 
